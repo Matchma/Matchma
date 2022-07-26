@@ -1,0 +1,27 @@
+--密码
+InputLayout={
+  LinearLayout;
+  orientation="vertical";
+  Focusable=true,
+  FocusableInTouchMode=true,
+  {
+    EditText;
+    hint="请输入卡密！";
+    layout_marginTop="5dp";
+    layout_width="80%w";
+    layout_gravity="center",
+    id="edit";
+  };
+};
+
+AlertDialog.Builder(this)
+.setTitle("请输入卡密！")
+.setView(loadlayout(InputLayout))
+.setPositiveButton("确认",{onClick=function(v) 
+    if(edit.Text=="这里输入你想要的密码")then--密码
+      进入子页面("这里跳转的子页面")
+      else
+      退出程序()
+      end
+    end})
+.show()

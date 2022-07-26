@@ -1,0 +1,39 @@
+--程序退出时执行对话框
+function onKeyDown(key,event)
+  if(key==4)then
+    if(webView.canGoBack())then
+      webView.goBack()
+    else
+      appinfo=this.getPackageManager().getApplicationInfo(this.getPackageName(),0)
+      applabel=this.getPackageManager().getApplicationLabel(appinfo)
+      退出确认=对话框()
+      .设置消息("您确定要退出 "..applabel.." 吗?")
+      退出按钮={
+        [1]=function()
+          退出确认
+          .设置积极按钮("确定",function()
+            退出程序()
+            end
+             )
+             .设置中立按钮("清除缓存",function()
+               对话框()
+               .设置消息("清除缓存后再次运行程序将变得缓慢\n您确定要清除 "..applabel.." 的缓存吗?")
+               .设置积极按钮("确定",function()
+                os.execute("pm clear "..this.packageName)
+                退出程序()
+                end)
+               .设置消极按钮("取消",function()
+                end)
+              .显示()
+             end
+           )
+          .设置消极按钮("取消")
+          end
+        }
+        math.randomseed(tonumber(tostring(os.time()):reverse():sub(1, 6)))
+       退出按钮[math.random(1,1)]()
+      退出确认.show()
+    end
+    return true
+  end
+end

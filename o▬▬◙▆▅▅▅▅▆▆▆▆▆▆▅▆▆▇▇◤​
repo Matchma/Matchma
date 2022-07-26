@@ -1,0 +1,44 @@
+--用户协议
+require"import"
+import "android.app.*"
+import "android.os.*"
+import "android.widget.*"
+import "android.view.*"
+import "android.text.*"
+import "java.io.File"
+import "java.io.*"
+
+if File("sdcard/no").exists() then--判断文件夹是否已经创建
+
+else --判断为没有文件夹
+  File("/sdcard/no").mkdir()--创建文件夹
+  io.open("sdcard/no/1", 'w')--创建文件
+  io.open("sdcard/no/1","w+"):write("54188，hh(ಡωಡ)hiahiahia"):close()--默认为不同意，即进入应用后会弹出用户协议窗口
+end
+
+
+--读取
+function 写入文件(路径,内容)
+  import "java.io.File"
+  f=File(tostring(File(tostring(路径)).getParentFile())).mkdirs()
+  io.open(tostring(路径),"w"):write(tostring(内容)):close()
+end
+import "java.io.*"
+file,err=io.open("sdcard/no/1")
+if err==nil then
+  用户协议=io.open("sdcard/no/1"):read("*a")--读取应用协议是否同意
+  if 用户协议=="OK" then
+    --已经同意过用户协议，不用再次弹出
+  else--未同意过用户协议
+    对话框()
+    .设置标题("Important reminder")
+    .设置消息("The functions of this application are in the three points in the upper right corner. If there is any problem with the application, you can join the group chat: 601666459 reply to the administrator: Telan (2238339805) application creation: 22 February 2022, ")
+    .设置积极按钮("OK",function()
+      io.open("sdcard/no/1","w+"):write("OK"):close()
+    end)
+    .设置中立按钮("NO",function()
+      对话框()
+      .设置标题("Why?")
+      .设置消息("Oh, newcomer, why do you want to refuse? But you still click refuse, and you can only quit! You can only re-enter.")
+      .设置积极按钮("sign out",function()
+        退出程序
